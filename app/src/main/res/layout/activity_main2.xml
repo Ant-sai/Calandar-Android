@@ -25,12 +25,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="92dp"
         android:ems="10"
+        android:hint="Titre"
         android:inputType="textPersonName"
-        android:text="Titre"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.186"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
         android:id="@+id/add_part"
@@ -39,10 +39,10 @@
         android:layout_marginTop="64dp"
         android:ems="10"
         android:inputType="number"
-        android:text="Nombre De personnes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.186"
         app:layout_constraintStart_toStartOf="parent"
+        android:hint="Nombre de Participants"
         app:layout_constraintTop_toBottomOf="@+id/add_name" />
 
     <TextView
@@ -52,7 +52,7 @@
         android:layout_marginTop="24dp"
         android:text="Date"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.188"
+        app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_part" />
 
@@ -70,7 +70,7 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="Date Choisi"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -87,12 +87,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-    <ListView
-        android:id="@+id/users_list"
-        android:layout_width="32dp"
-        android:layout_height="86dp"
-        tools:layout_editor_absoluteX="97dp"
-        tools:layout_editor_absoluteY="721dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
