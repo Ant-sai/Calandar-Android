@@ -97,8 +97,6 @@ public class MainActivity3 extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 arrDisplay.remove(which_item);
-                                String pos = Integer.toString(which_item);
-                                Toast.makeText(getApplicationContext(),which_item,1000).show();
                                 adp.notifyDataSetChanged();
                             }
                         }).setNegativeButton("Non",null).show();

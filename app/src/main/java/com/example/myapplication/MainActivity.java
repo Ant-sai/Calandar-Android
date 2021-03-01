@@ -17,6 +17,14 @@ public class MainActivity extends AppCompatActivity {
 
         Button btnAct2 = (Button) findViewById(R.id.btn_act2); // On créer les bouttons qu'on lie a a l'ID de l'xml
         Button btnAct3 = (Button) findViewById(R.id.btn_act3);
+        Button button_read = (Button) findViewById(R.id.button_read);
+
+        button_read.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,MainActivity4_readText.class));
+            }
+        });
 
         btnAct2.setOnClickListener(new View.OnClickListener() { // Méthode quand on clique
             @Override
