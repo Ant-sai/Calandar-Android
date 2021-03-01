@@ -3,7 +3,9 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -15,27 +17,32 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class MainActivity3 extends AppCompatActivity {
 
     //Créations des différents éléments
 
     ContentValues val = new ContentValues();
     ListView lst;
-    String arrNom [], arrDate [], arrDisplay [];
+    String arrNom [], arrDate [],  arrType[];
+
     int arrParti [];
     SQLiteDatabase db;
     Button btnRetour;
+    ArrayList <String> arrDisplay;
 
     @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) { // A la création de la page
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
+        arrDisplay = new ArrayList<String>();
 
         lst = (ListView) findViewById(R.id.listdata);  // Afiliation a la listeView
         btnRetour = (Button) findViewById(R.id.btn_retour);// Afiliation au Bouton
 
-        db = openOrCreateDatabase("Events.db",SQLiteDatabase.CREATE_IF_NECESSARY, null); // Si La bdd Events.bd existe pas il créer une base de donnée.
+        db = openOrCreateDatabase("Events3.db",SQLiteDatabase.CREATE_IF_NECESSARY, null); // Si La bdd Events.bd existe pas il créer une base de donnée.
 
         Cursor c = db.query("Event", null,null,null,null,null,null); // Curseur pour la Table
 
@@ -43,7 +50,7 @@ public class MainActivity3 extends AppCompatActivity {
         arrNom = new String[c.getCount()];
         arrDate = new String[c.getCount()];
         arrParti = new int[c.getCount()];
-        arrDisplay = new String[c.getCount()];
+        arrType = new String[c.getCount()];
 
         btnRetour.setOnClickListener(new View.OnClickListener() { // Bouton Retour
             @Override
@@ -59,10 +66,11 @@ public class MainActivity3 extends AppCompatActivity {
             arrNom [i] = c.getString(1);
             arrDate [i] = c.getString(3);
             arrParti [i] = c.getInt(2);
+            arrType [i] = c.getString(4);
 
             String partiString = Integer.toString(arrParti [i]); // on converti le nombre de participants en String
 
-            arrDisplay [i] = "Evenement : " + arrNom[i] +" \n Date : "+ arrDate [i] + " \n Participants : " + partiString ; // Tableau qui va afficher TOUT les élements
+            arrDisplay.add("Evenement : " + arrNom[i] +" \n Date : "+ arrDate [i] + " \n Participants : " + partiString + " \n Type : " + arrType[i]); // Tableau qui va afficher TOUT les élements
             Toast.makeText(this,"Nom : "+ arrNom[i],1000).show();
             c.moveToNext(); // Prochaine Ligne du tableau
         }
@@ -74,6 +82,27 @@ public class MainActivity3 extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getApplicationContext(),"Titre"+ arrNom[position],1000).show();
+            }
+        });
+
+        lst.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                final int which_item = position;
+                new AlertDialog.Builder(MainActivity3.this)
+                        .setIcon(android.R.drawable.ic_delete)
+                        .setTitle(" Etes vous sur ?")
+                        .setMessage("Voulez vous supprimmer cet item ?")
+                        .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                arrDisplay.remove(which_item);
+                                String pos = Integer.toString(which_item);
+                                Toast.makeText(getApplicationContext(),which_item,1000).show();
+                                adp.notifyDataSetChanged();
+                            }
+                        }).setNegativeButton("Non",null).show();
+                return true;
             }
         });
     }

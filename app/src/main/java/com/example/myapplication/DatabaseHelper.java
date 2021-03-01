@@ -9,18 +9,18 @@ import android.util.Log;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String DB_Name = "Events.db";
+    private static final String DB_Name = "Events3.db";
     private static final String DB_Table = "Event";
 
     /*colonne*/
     private static final String ID = "ID";
     private static final String NAME = "TITRE";
     private static final String DATE = "DATE";
+    private static final String TYPE_RDV = "TYPE_RDV";
     private static final String PARTICIPANTS = "PARTICIPANTS";
 
 
-    private  static final String CREATE_TABLE = "CREATE TABLE " + DB_Table + "(" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +NAME +" TEXT, "  + PARTICIPANTS +" INTEGER, " +DATE +" TEXT" + ")"; // Requete SQL pour créer la table
-
+    private  static final String CREATE_TABLE = "CREATE TABLE " + DB_Table + "(" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +NAME +" TEXT,"  + PARTICIPANTS +" INTEGER, " +DATE +" TEXT, " +TYPE_RDV +" TEXT " +")"; // Requete SQL pour créer la table
     public  DatabaseHelper (Context context){
         super(context, DB_Name, null,1); // appel à la classe parent
     }
@@ -29,7 +29,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        Log.v("stthr",CREATE_TABLE);
         db.execSQL(CREATE_TABLE); // création de la Table
+        Log.v("sttr",CREATE_TABLE);
     }
 
     @Override
@@ -39,7 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // méthode d'ajout dans la bdd
-    public boolean insertData (String name,int parti, String date){
+    public boolean insertData (String name,int parti, String date, String type){
         SQLiteDatabase db = this.getWritableDatabase(); // On met en mode écriture le BDD
 
         ContentValues contentValues = new ContentValues(); // Objet qui contiendra le nom de notre colonne et la valeur qu'on souhaite ajouter
@@ -48,12 +50,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(NAME,name);
         contentValues.put(PARTICIPANTS,parti);
         contentValues.put(DATE,date);
+        contentValues.put(TYPE_RDV,type);
 
         Log.v("test", "contentValues"); // log pour voir si cela est bien fait
 
         long result = db.insert(DB_Table, null,contentValues); // insersion des datas dans la BDD
 
         return  result != -1; // si la ligne à été ajouter alors renvoie rien si nn -1
+    }
+    public  boolean deleteTitle(String name)
+    {
+        SQLiteDatabase db = this.getWritableDatabase(); // On met en mode écriture le BDD
+        return db.delete(DB_Table, ID + "=" + name,null)>0;
     }
     // method to view data
     public  Cursor viewData(){
