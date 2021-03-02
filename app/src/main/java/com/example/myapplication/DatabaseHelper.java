@@ -5,9 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+import java.io.Serializable;
+
+public class DatabaseHelper extends SQLiteOpenHelper implements Serializable {
 
     private static final String DB_Name = "Events3.db";
     private static final String DB_Table = "Event";
@@ -72,4 +76,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return cursor;
     }
+
 }

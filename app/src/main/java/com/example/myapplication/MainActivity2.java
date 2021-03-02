@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -85,6 +86,8 @@ public class MainActivity2 extends AppCompatActivity implements DatePickerDialog
                 }
                 if (!name.equals("") && db.insertData(name,part,textViewDate,typeEvent)) { // Si le nom de l'event et que l'insertion dans la BDD sont TRUE (appel de la méthode insert data de la classe DataBaseHelper)
                     dateList.add(textViewDate);
+                    Intent intent = new Intent(getApplicationContext(),MainActivity3.class);
+                    intent.putExtra("bdd",db);
                     Toast.makeText(MainActivity2.this, "Données ajoutées", Toast.LENGTH_SHORT).show(); // Affichage du succès d'ajout de données
                     // Remise a 0 des champs
                     editAddName.setText("");

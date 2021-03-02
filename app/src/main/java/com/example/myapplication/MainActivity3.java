@@ -27,10 +27,11 @@ public class MainActivity3 extends AppCompatActivity {
     ListView lst;
     String arrNom [], arrDate [],  arrType[];
 
-    int arrParti [];
+    int arrParti [], arrid[];
     SQLiteDatabase db;
     Button btnRetour;
     ArrayList <String> arrDisplay;
+    DatabaseHelper db2;
 
     @SuppressLint("WrongConstant")
     @Override
@@ -38,6 +39,8 @@ public class MainActivity3 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
         arrDisplay = new ArrayList<String>();
+
+        db2 =new DatabaseHelper(this);
 
         lst = (ListView) findViewById(R.id.listdata);  // Afiliation a la listeView
         btnRetour = (Button) findViewById(R.id.btn_retour);// Afiliation au Bouton
@@ -51,6 +54,7 @@ public class MainActivity3 extends AppCompatActivity {
         arrDate = new String[c.getCount()];
         arrParti = new int[c.getCount()];
         arrType = new String[c.getCount()];
+        arrid = new int [c.getCount()];
 
         btnRetour.setOnClickListener(new View.OnClickListener() { // Bouton Retour
             @Override
@@ -67,6 +71,7 @@ public class MainActivity3 extends AppCompatActivity {
             arrDate [i] = c.getString(3);
             arrParti [i] = c.getInt(2);
             arrType [i] = c.getString(4);
+            arrid[i] = c.getInt(0);
 
             String partiString = Integer.toString(arrParti [i]); // on converti le nombre de participants en String
 
@@ -97,6 +102,10 @@ public class MainActivity3 extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 arrDisplay.remove(which_item);
+                                int posArr = arrid[which_item];
+                                String pos = Integer.toString(posArr);
+                                db2.deleteTitle(pos);
+
                                 adp.notifyDataSetChanged();
                             }
                         }).setNegativeButton("Non",null).show();
